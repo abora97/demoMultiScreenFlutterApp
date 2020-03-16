@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'home.dart';
 
@@ -39,6 +40,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  var index = 0;
+
   void _incrementCounter() {
     setState(() {
       if (_counter == 5) {
@@ -46,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
           context,
           MaterialPageRoute(builder: (context) => Home()),
         );
-      }
+      } else {}
 
       _counter++;
     });
@@ -96,16 +99,78 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        child: Container(height: 50.0,),
-      ),
+//      bottomNavigationBar: new BottomAppBar(
+//        shape: const CircularNotchedRectangle(),
+//        child: Container(
+//          height: 50.0,
+//        ),
+//      ),
+      bottomNavigationBar: new BottomNavigationBar(
+          currentIndex: index,
+          onTap: (int index) {
+            setState(() {
+              this.index = index;
+            });
+            _navigateToScreens(index);
+          },
+          type: BottomNavigationBarType.fixed,
+          items: [
+            new BottomNavigationBarItem(
+              icon: index == 0 ? new Icon(Icons.home) : new Icon(Icons.home),
+//              icon: new Icon(Icons.search),
+              title: new Text("Home"),
+            ),
+            new BottomNavigationBarItem(
+              icon:
+                  index == 1 ? new Icon(Icons.search) : new Icon(Icons.search),
+              title: new Text("Search"),
+            )
+          ]),
+
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,// This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // This trailing comma makes auto-formatting nicer for build methods.
+      drawer: new Drawer(
+        child: new ListView(
+          children: <Widget>[
+            new DrawerHeader(
+              child: new Text("Drawer Header"),
+              decoration: new BoxDecoration(
+                color: Colors.blue,
+              ),
+            ),
+            new Text("Item 1"),
+            new Text("Item 2"),
+            new Text("Item 3"),
+            new Text("Item 4"),
+            new Text("Item 5"),
+            new Text("Item 6"),
+          ],
+        ),
+      ),
     );
+  }
+
+  init() {
+    print("object ssssssssss $_counter");
+    Fluttertoast.showToast(
+        msg: "This is Center Short Toast",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
+
+  _navigateToScreens(int index) {
+    if (index == 0) {
+      print("object sssssssssssssssssssssss $index");
+    } else {
+      print("object sssssssssssssssssssssss $index");
+    }
   }
 }
